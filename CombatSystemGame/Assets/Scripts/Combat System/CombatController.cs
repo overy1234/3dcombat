@@ -14,8 +14,9 @@ public class CombatController : MonoBehaviour
 
     private void Update()
     {
+       
         // 마우스 좌클릭 시 공격 시도
-        if(Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
             meeleFighter.TryToAttack();
         }

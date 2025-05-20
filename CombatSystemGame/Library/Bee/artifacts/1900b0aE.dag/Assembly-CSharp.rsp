@@ -428,9 +428,14 @@
 "Assets/Scripts/Combat System/AttackData.cs"
 "Assets/Scripts/Combat System/CombatController.cs"
 "Assets/Scripts/Combat System/MeeleFighter.cs"
+"Assets/Scripts/Enemy/ChaseState.cs"
+"Assets/Scripts/Enemy/EnemyController.cs"
+"Assets/Scripts/Enemy/IdleState.cs"
 "Assets/Scripts/Player/CameraController.cs"
 "Assets/Scripts/Player/PlayerController.cs"
 "Assets/TutorialInfo/Scripts/Readme.cs"
+"Assets/Util/StateMachine/State.cs"
+"Assets/Util/StateMachine/StateMachine.cs"
 "Assets/VarcanRex/LongSword/Scripts/SimpleRotate.cs"
 -langversion:9.0
 /deterministic

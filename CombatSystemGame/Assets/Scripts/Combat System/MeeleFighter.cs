@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -12,6 +13,7 @@ public class MeeleFighter : MonoBehaviour
     [SerializeField] GameObject sword;
 
     BoxCollider swordCollider;
+    SphereCollider leftHandCollider,rightHandCollider,leftFootCollider,rightFootCollider;
 
     // 애니메이터 컴포넌트 참조
     Animator animator;
@@ -30,7 +32,13 @@ public class MeeleFighter : MonoBehaviour
         if(sword != null)
         {
             swordCollider = sword.GetComponent<BoxCollider>();
-            swordCollider.enabled = false;
+            leftHandCollider  = animator.GetBoneTransform(HumanBodyBones.LeftHand).GetComponent<SphereCollider>();
+            rightHandCollider = animator.GetBoneTransform(HumanBodyBones.RightHand).GetComponent<SphereCollider>();
+            leftFootCollider  = animator.GetBoneTransform(HumanBodyBones.LeftFoot).GetComponent<SphereCollider>();
+            rightFootCollider = animator.GetBoneTransform(HumanBodyBones.RightFoot).GetComponent<SphereCollider>();
+
+            DisableAllHitBox();
+
         }
     }
 
@@ -85,7 +93,7 @@ public class MeeleFighter : MonoBehaviour
                 {
                     attackState = AttackState.Impact;
                     //콜라이더 키고
-                    swordCollider.enabled = true;
+                    EnableHitBox(attacks[comboCount]);
                 }
             }
             else if(attackState == AttackState.Impact)
@@ -94,7 +102,7 @@ public class MeeleFighter : MonoBehaviour
                 {
                     attackState = AttackState.Cooldown;
                     //콜라이더 끄기
-                    swordCollider.enabled = false;
+                    DisableAllHitBox();
                 }
             }
             else if(attackState == AttackState.Cooldown)
@@ -148,6 +156,47 @@ public class MeeleFighter : MonoBehaviour
         // 공격 상태 해제
         inAction = false;
     }
+
+
+    void EnableHitBox(AttackData attack)
+    {
+        switch(attack.HitboxToUse)
+        {
+            case AttackHitbox.LeftHand:
+                leftHandCollider.enabled = true;
+                break;
+            case AttackHitbox.RightHand:
+                rightHandCollider.enabled = true;
+                break;
+            case AttackHitbox.LeftFoot:
+                leftFootCollider.enabled = true;
+                break;
+            case AttackHitbox.RightFoot:
+                rightFootCollider.enabled = true;
+                break;
+            case AttackHitbox.Sword:
+                swordCollider.enabled = true;
+                break;
+            default:
+                break;
+        }
+    }
+
+
+
+
+
+
+    void DisableAllHitBox()        
+    {
+        swordCollider.enabled = false;
+
+        leftHandCollider.enabled = false;
+        rightHandCollider.enabled = false;
+        leftFootCollider.enabled = false;
+        rightFootCollider.enabled = false;
+    }
+
 
 
 }

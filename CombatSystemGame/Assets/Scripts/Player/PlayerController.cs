@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
         var moveDir = cameraController.PlanarRotation * moveInput;
 
         GroundCheck();
-        Debug.Log("IsGrounded = "+ isGrounded);
+       
 
         if(isGrounded)
         {
