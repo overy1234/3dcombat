@@ -433,6 +433,7 @@
 "Assets/Scripts/Enemy/States/AttackState.cs"
 "Assets/Scripts/Enemy/States/CombatMovementState.cs"
 "Assets/Scripts/Enemy/States/IdleState.cs"
+"Assets/Scripts/Enemy/States/RetreatAfterAttackState.cs"
 "Assets/Scripts/Enemy/VisionSensor.cs"
 "Assets/Scripts/Player/CameraController.cs"
 "Assets/Scripts/Player/PlayerController.cs"

@@ -163,18 +163,23 @@ public class MeeleFighter : MonoBehaviour
         switch(attack.HitboxToUse)
         {
             case AttackHitbox.LeftHand:
+              if (leftHandCollider != null)
                 leftHandCollider.enabled = true;
                 break;
             case AttackHitbox.RightHand:
+             if (rightHandCollider != null)
                 rightHandCollider.enabled = true;
                 break;
             case AttackHitbox.LeftFoot:
+             if (leftFootCollider != null)
                 leftFootCollider.enabled = true;
                 break;
             case AttackHitbox.RightFoot:
+             if (rightFootCollider != null)
                 rightFootCollider.enabled = true;
                 break;
             case AttackHitbox.Sword:
+            if (swordCollider != null)
                 swordCollider.enabled = true;
                 break;
             default:
@@ -202,6 +207,8 @@ public class MeeleFighter : MonoBehaviour
             rightFootCollider.enabled = false;
     }
 
+
+    public List<AttackData> Attacks => attacks;
 
 
 }
