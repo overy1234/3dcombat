@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
 
         if (meeleFighter.inAction)
         {
-            animator.SetFloat("moveAmount", 0f);
+            animator.SetFloat("forwardSpeed", 0f);
             return;
         }
 
@@ -89,7 +89,7 @@ public class PlayerController : MonoBehaviour
         // 부드러운 회전 처리
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
-        animator.SetFloat("moveAmount", moveAmount,0.2f,Time.deltaTime);
+        animator.SetFloat("forwardSpeed", moveAmount,0.2f,Time.deltaTime);
 
     }
 

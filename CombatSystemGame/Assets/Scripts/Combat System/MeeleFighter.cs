@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 
-public enum AttackState { Idle, Windup, Impact,Cooldown}
+public enum EAttackState { Idle, Windup, Impact,Cooldown}
 
 // 근접 전투를 담당하는 클래스
 public class MeeleFighter : MonoBehaviour
@@ -45,7 +45,7 @@ public class MeeleFighter : MonoBehaviour
 
 
 
-    public AttackState attackState;
+    public EAttackState attackState {get;private set;}
     bool doCombo;
     int comboCount = 0;
 
@@ -57,7 +57,7 @@ public class MeeleFighter : MonoBehaviour
         {
             StartCoroutine(Attack());
         }
-        else if(attackState == AttackState.Impact || attackState == AttackState.Cooldown)
+        else if(attackState == EAttackState.Impact || attackState == EAttackState.Cooldown)
         {
             doCombo = true;
         }
@@ -68,7 +68,7 @@ public class MeeleFighter : MonoBehaviour
     {
         // 공격 상태 설정
         inAction = true;
-        attackState = AttackState.Windup;
+        attackState = EAttackState.Windup;
 
 
 
@@ -87,25 +87,25 @@ public class MeeleFighter : MonoBehaviour
 
             float normalizedTime = timer / animState.length;
 
-            if(attackState == AttackState.Windup)
+            if(attackState == EAttackState.Windup)
             {
                 if(normalizedTime >= attacks[comboCount].ImpactStartTime)
                 {
-                    attackState = AttackState.Impact;
+                    attackState = EAttackState.Impact;
                     //콜라이더 키고
                     EnableHitBox(attacks[comboCount]);
                 }
             }
-            else if(attackState == AttackState.Impact)
+            else if(attackState == EAttackState.Impact)
             {
                 if(normalizedTime >= attacks[comboCount].ImpactEndTime)
                 {
-                    attackState = AttackState.Cooldown;
+                    attackState = EAttackState.Cooldown;
                     //콜라이더 끄기
                     DisableAllHitBox();
                 }
             }
-            else if(attackState == AttackState.Cooldown)
+            else if(attackState == EAttackState.Cooldown)
             {
                 //콤보
                 if(doCombo)
@@ -124,7 +124,7 @@ public class MeeleFighter : MonoBehaviour
         }
 
 
-        attackState = AttackState.Idle;
+        attackState = EAttackState.Idle;
         comboCount = 0;
         // 공격 상태 해제
         inAction = false;
@@ -189,12 +189,17 @@ public class MeeleFighter : MonoBehaviour
 
     void DisableAllHitBox()        
     {
-        swordCollider.enabled = false;
+        if (swordCollider != null)
+            swordCollider.enabled = false;
 
-        leftHandCollider.enabled = false;
-        rightHandCollider.enabled = false;
-        leftFootCollider.enabled = false;
-        rightFootCollider.enabled = false;
+        if(leftHandCollider != null)
+             leftHandCollider.enabled = false;
+        if (rightHandCollider != null)
+            rightHandCollider.enabled = false;
+        if (leftFootCollider != null)
+            leftFootCollider.enabled = false;
+        if (rightFootCollider != null)
+            rightFootCollider.enabled = false;
     }
 
 
