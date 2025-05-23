@@ -60,6 +60,9 @@ public class EnemyManager : MonoBehaviour
     }
 
 
-
+    public EnemyController GetAttackingEnemy()
+    {
+        return enemiesInRange.FirstOrDefault(e => e.IsInState(EnemyStates.Attack));
+    }
 
 }

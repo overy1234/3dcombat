@@ -19,6 +19,7 @@ public class MeeleFighter : MonoBehaviour
     Animator animator;
     // 현재 공격 동작 중인지 확인하는 플래그
     public bool inAction { get; private set; } = false;
+    public bool InCounter { get; set; } = false;
 
     private void Awake()
     {
@@ -89,6 +90,11 @@ public class MeeleFighter : MonoBehaviour
 
             if(attackState == EAttackState.Windup)
             {
+
+                if (InCounter) break;
+
+
+
                 if(normalizedTime >= attacks[comboCount].ImpactStartTime)
                 {
                     attackState = EAttackState.Impact;
@@ -158,6 +164,57 @@ public class MeeleFighter : MonoBehaviour
     }
 
 
+    public IEnumerator PerformCounterAttack(EnemyController opponent)
+    {
+        // 공격 상태 설정
+        inAction = true;
+
+        InCounter = true;
+
+        opponent.Fighter.InCounter = true;
+        opponent.ChangeState(EnemyStates.Dead);
+
+
+        var dispVec = opponent.transform.position - transform.position;
+        dispVec.y = 0f;
+        transform.rotation = Quaternion.LookRotation(dispVec);
+        opponent.transform.rotation = Quaternion.LookRotation(-dispVec);
+
+        var targetPos = opponent.transform.position - dispVec.normalized * 1f;
+
+
+
+        animator.CrossFade("CounterAttack", 0.2f);
+        opponent.Anim.CrossFade("CounterAttackVictim", 0.2f);
+        
+
+
+
+
+        yield return null; //1프레임 null로넘어가기
+
+        // 다음 애니메이션 상태 정보 가져오기
+        var animState = animator.GetNextAnimatorStateInfo(1);
+
+        float timer = 0f;
+        while(timer <= animState.length)
+        {
+           transform.position = Vector3.MoveTowards(transform.position, targetPos, 5 * Time.deltaTime);
+            yield return null;
+            timer += Time.deltaTime;
+        }
+
+
+        InCounter = false;
+
+        opponent.Fighter.InCounter = false;
+
+        // 공격 상태 해제
+        inAction = false;
+    }
+
+
+
     void EnableHitBox(AttackData attack)
     {
         switch(attack.HitboxToUse)
@@ -209,6 +266,9 @@ public class MeeleFighter : MonoBehaviour
 
 
     public List<AttackData> Attacks => attacks;
+
+
+    public bool IsCounterable => attackState == EAttackState.Windup && comboCount == 0; 
 
 
 }
