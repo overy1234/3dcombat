@@ -56,5 +56,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "CombatSystemGame.sln"
+    "dotnet.defaultSolution": "CombatSystemGame.sln",
+    "dotnet.preferCSharpExtension": true
 }

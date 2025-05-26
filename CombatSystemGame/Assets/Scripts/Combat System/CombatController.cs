@@ -3,14 +3,18 @@ using UnityEngine;
 // 전투 시스템을 총괄하는 컨트롤러 클래스
 public class CombatController : MonoBehaviour
 {
+    public EnemyController targetEnemy;
+
     // 근접 전투 시스템 참조
     MeeleFighter meeleFighter;
     Animator animator;
+    CameraController cam;
     private void Awake()
     {
         // 근접 전투 컴포넌트 가져오기
         meeleFighter = GetComponent<MeeleFighter>();
         animator = GetComponent<Animator>();
+        cam = Camera.main.GetComponent<CameraController>();
     }
 
     private void Update()
@@ -44,6 +48,15 @@ public class CombatController : MonoBehaviour
 
         transform.rotation *= animator.deltaRotation;
     }
+
+
+    public Vector3 GetTargetingDir()
+    {
+        var vecFromCam = transform.position - cam.transform.position;
+        vecFromCam.y = 0f;
+        return vecFromCam.normalized;
+    }
+
 
 
 }
