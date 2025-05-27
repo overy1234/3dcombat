@@ -352,7 +352,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef6cb48c54d74d441944a4fe0198c2cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetEnemy: {fileID: 0}
 --- !u!114 &723757257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -371,6 +370,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 425aa0b41c14dfe41a98ef741c25c35d, type: 2}
   - {fileID: 11400000, guid: ee62af38ed0d33645a91addfe207fd1a, type: 2}
   sword: {fileID: 551619105}
+  rotationSpeed: 500
 --- !u!4 &779065595 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6349411254853763561, guid: 3dc2edab4ee04b74a8f4307bd4776a7f, type: 3}

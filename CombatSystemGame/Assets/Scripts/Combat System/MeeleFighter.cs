@@ -11,6 +11,7 @@ public class MeeleFighter : MonoBehaviour
 {
     [SerializeField] List<AttackData> attacks;
     [SerializeField] GameObject sword;
+    [SerializeField] float rotationSpeed = 500;
 
     BoxCollider swordCollider;
     SphereCollider leftHandCollider,rightHandCollider,leftFootCollider,rightFootCollider;
@@ -51,12 +52,12 @@ public class MeeleFighter : MonoBehaviour
     int comboCount = 0;
 
     // 공격 시도 함수
-    public void TryToAttack()
+    public void TryToAttack(Vector3? attackDir = null)
     {
         // 현재 공격 중이 아닐 때만 새로운 공격 시작
         if(!inAction)
         {
-            StartCoroutine(Attack());
+            StartCoroutine(Attack(attackDir));
         }
         else if(attackState == EAttackState.Impact || attackState == EAttackState.Cooldown)
         {
@@ -64,12 +65,20 @@ public class MeeleFighter : MonoBehaviour
         }
     }
 
+    
     // 공격 동작을 처리하는 코루틴
-    IEnumerator Attack()
+    IEnumerator Attack(Vector3? attackDir = null)
     {
         // 공격 상태 설정
         inAction = true;
         attackState = EAttackState.Windup;
+
+
+        if(attackDir != null)
+        {
+          transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(attackDir.Value), rotationSpeed * Time.deltaTime);
+        }
+
 
 
 
@@ -141,14 +150,21 @@ public class MeeleFighter : MonoBehaviour
     {
         if(other.CompareTag("Hitbox") && !inAction)
         {
-            StartCoroutine(PlayHitReaction());
+            StartCoroutine(PlayHitReaction(other.GetComponentInParent<MeeleFighter>().transform));
         }
     }
 
-    IEnumerator PlayHitReaction()
+    IEnumerator PlayHitReaction(Transform attacker)
     {
         // 공격 상태 설정
         inAction = true;
+
+        var dispVec = attacker.position - transform.position;
+        dispVec.y = 0f;
+        transform.rotation = Quaternion.LookRotation(dispVec);
+
+
+
         // Slash 애니메이션으로 부드럽게 전환 (0.2초 동안)
         animator.CrossFade("SwordImpact", 0.2f);
         yield return null; //1프레임 null로넘어가기

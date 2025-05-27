@@ -29,6 +29,16 @@ public class EnemyManager : MonoBehaviour
     public void RemoveEnemyInRange(EnemyController enemy)
     {
         enemiesInRange.Remove(enemy);
+
+
+        if(enemy == player.TargetEnemy)
+        {
+            enemy.MeshHighlighter?.HighlightMesh(false);
+            player.TargetEnemy = GetClosestEnemyToDirection(player.GetTargetingDir());
+            player.TargetEnemy?.MeshHighlighter?.HighlightMesh(true);
+
+        }
+        
     }
 
 
@@ -65,12 +75,12 @@ public class EnemyManager : MonoBehaviour
         if(timer >=0.1f)
         {
             timer = 0f;
-            var closestEnemy = GetClosesEnemyToPlayerDir();
-            if (closestEnemy != null && closestEnemy != player.targetEnemy)
+            var closestEnemy = GetClosestEnemyToDirection(player.GetTargetingDir());
+            if (closestEnemy != null && closestEnemy != player.TargetEnemy)
             {
-                var prevEnemy = player.targetEnemy;
-                player.targetEnemy = closestEnemy;
-                player?.targetEnemy?.MeshHighlighter.HighlightMesh(true);
+                var prevEnemy = player.TargetEnemy;
+                player.TargetEnemy = closestEnemy;
+                player?.TargetEnemy?.MeshHighlighter.HighlightMesh(true);
                 prevEnemy?.MeshHighlighter.HighlightMesh(false);
             }
         }
@@ -91,9 +101,9 @@ public class EnemyManager : MonoBehaviour
     }
 
 
-    public EnemyController GetClosesEnemyToPlayerDir()
+    public EnemyController GetClosestEnemyToDirection(Vector3 direction)
     {
-        var targetingDir = player.GetTargetingDir();
+        
 
         float minDinstance = Mathf.Infinity;
         EnemyController closestEnemy = null;
@@ -104,7 +114,7 @@ public class EnemyManager : MonoBehaviour
             vecToEnemy.y = 0;
 
 
-            float angle  =  Vector3.Angle(targetingDir, vecToEnemy);
+            float angle  =  Vector3.Angle(direction, vecToEnemy);
             float distance = vecToEnemy.magnitude * Mathf.Sin(angle * Mathf.Deg2Rad);
 
             if(distance < minDinstance)
