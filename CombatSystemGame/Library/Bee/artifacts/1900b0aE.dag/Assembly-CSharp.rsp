@@ -434,6 +434,7 @@
 "Assets/Scripts/Enemy/States/AttackState.cs"
 "Assets/Scripts/Enemy/States/CombatMovementState.cs"
 "Assets/Scripts/Enemy/States/DeadState.cs"
+"Assets/Scripts/Enemy/States/GetttingHitState.cs"
 "Assets/Scripts/Enemy/States/IdleState.cs"
 "Assets/Scripts/Enemy/States/RetreatAfterAttackState.cs"
 "Assets/Scripts/Enemy/VisionSensor.cs"

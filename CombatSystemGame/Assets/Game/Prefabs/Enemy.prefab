@@ -1621,6 +1621,7 @@ GameObject:
   - component: {fileID: 5818915946351995112}
   - component: {fileID: 1879481803344714920}
   - component: {fileID: 1329740857057622437}
+  - component: {fileID: 4855466450262619835}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: Untagged
@@ -1688,6 +1689,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ef250d53849d0f14a9cc6e97075a7f25, type: 2}
   - {fileID: 11400000, guid: 425aa0b41c14dfe41a98ef741c25c35d, type: 2}
   sword: {fileID: 1457024709171996070}
+  rotationSpeed: 500
 --- !u!143 &5741770217264651643
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1833,6 +1835,19 @@ MonoBehaviour:
   - {fileID: 2453491718481830177}
   originalMaterial: {fileID: 1106563633393636324, guid: b176f28b4c9b8694c81811f3117ba2ab, type: 3}
   highlightedMaterial: {fileID: 2100000, guid: 8d7a06cd83d11214d9d9b4ec99e9cdbb, type: 2}
+--- !u!114 &4855466450262619835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5706583582369004340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 537a59552286e4247b190f5fa16ada62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stunnTime: 0.5
 --- !u!1 &5728799371438730702
 GameObject:
   m_ObjectHideFlags: 0

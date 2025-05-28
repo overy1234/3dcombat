@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -15,6 +16,10 @@ public class MeeleFighter : MonoBehaviour
 
     BoxCollider swordCollider;
     SphereCollider leftHandCollider,rightHandCollider,leftFootCollider,rightFootCollider;
+
+    public event Action OnGoHit;
+    public event Action OnHitComplete;
+
 
     // 애니메이터 컴포넌트 참조
     Animator animator;
@@ -164,6 +169,9 @@ public class MeeleFighter : MonoBehaviour
         transform.rotation = Quaternion.LookRotation(dispVec);
 
 
+        OnGoHit?.Invoke();
+
+
 
         // Slash 애니메이션으로 부드럽게 전환 (0.2초 동안)
         animator.CrossFade("SwordImpact", 0.2f);
@@ -174,6 +182,8 @@ public class MeeleFighter : MonoBehaviour
 
         // 애니메이션이 끝날 때까지 대기
         yield return new WaitForSeconds(animState.length *0.8f);
+
+        OnHitComplete?.Invoke();
 
         // 공격 상태 해제
         inAction = false;
